@@ -1,11 +1,22 @@
+from typing import Optional
 import os
 import yaml
+from pathlib import Path
 
 class Config:
+    _instance = None
+    
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+        return cls._instance
+    
     def __init__(self):
-        self.config_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'config')
-        self.config_file = os.path.join(self.config_dir, 'config.yaml')
-        self._load_config()
+        if not hasattr(self, 'config'):
+            self.config_dir = Path(__file__).parent.parent.parent / 'config'
+            self.config_file = self.config_dir / 'config.yaml'
+            self._load_config()
+            self._validate_config()
     
     def _load_config(self):
         """加载配置文件"""
@@ -35,3 +46,10 @@ class Config:
         self.config[key] = value
         with open(self.config_file, 'w', encoding='utf-8') as f:
             yaml.dump(self.config, f, allow_unicode=True)
+    
+    def _validate_config(self):
+        """验证必要的配置项"""
+        required_keys = ['deepseek_api_key', 'flux_api_key']
+        for key in required_keys:
+            if not self.config.get(key):
+                raise ValueError(f"配置项 {key} 不能为空")

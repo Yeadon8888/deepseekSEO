@@ -43,6 +43,18 @@ def display_article(content):
     print("\n" + "="*50 + "\n")
 
 def main():
+    """统一的程序入口"""
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--gui', action='store_true', help='启动GUI界面')
+    args = parser.parse_args()
+    
+    if args.gui:
+        from gui import start_gui
+        start_gui()
+    else:
+        start_cli()
+
+def start_cli():
     parser = argparse.ArgumentParser(description='SEO文章智能生成系统')
     parser.add_argument('--requirements', '-r', type=str, help='文章要求，例如："写一篇关于人工智能的文章"')
     parser.add_argument('--word_count', '-w', type=int, help='文章字数，例如：1000')

@@ -6,6 +6,7 @@ from PIL import Image, ImageDraw, ImageFont
 from io import BytesIO
 from utils.config import Config
 import logging
+from pathlib import Path
 
 class ImageGenerator:
     def __init__(self):
@@ -47,7 +48,7 @@ class ImageGenerator:
                         image = Image.open(BytesIO(image_data))
                         image = self._add_watermark(image, watermark_text, 'bottom-right')
                         # 保存带水印的图片
-                        image_path = self._save_image(prompt, image)
+                        image_path = self._save_image(prompt, image_data)
                     else:
                         # 直接保存原图
                         image_path = self._save_image(prompt, image_data)
@@ -104,25 +105,15 @@ class ImageGenerator:
         except Exception as e:
             raise Exception(f"生成图片失败: {str(e)}")
     
-    def _save_image(self, prompt, image_data):
-        """
-        保存图片到本地
-        :param prompt: 生成图片的提示词
-        :param image_data: 图片数据（bytes或PIL Image对象）
-        :return: 保存的图片路径
-        """
+    def _save_image(self, prompt: str, image_data: bytes) -> str:
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        prompt_short = prompt[:30].replace(" ", "_")  # 使用提示词的前30个字符
-        filename = f"{timestamp}_{prompt_short}.png"
-        file_path = os.path.join(self.output_dir, filename)
+        filename = f"{timestamp}_{prompt[:30]}.png"
+        file_path = Path(self.output_dir) / filename
         
-        if isinstance(image_data, bytes):
-            with open(file_path, 'wb') as f:
-                f.write(image_data)
-        else:  # PIL Image对象
-            image_data.save(file_path, 'PNG')
-            
-        return file_path
+        with open(file_path, 'wb') as f:
+            f.write(image_data)
+        
+        return str(file_path)
     
     def _add_watermark(self, image, text, position='bottom-right'):
         """

@@ -12,3 +12,12 @@
 2025-02-18 15:17:37,257 - __main__ - INFO - 文档已生成: output\article_20250218_151737.docx
 2025-02-18 15:32:02,724 - article_generator - INFO - API客户端初始化成功
 2025-02-18 15:32:02,724 - article_generator - INFO - 尝试生成文章，第1次尝试
+2025-02-18 20:21:41,172 - article_generator - INFO - API客户端初始化成功
+2025-02-18 20:21:41,189 - article_generator - INFO - 尝试生成文章，第1次尝试
+2025-02-18 20:24:28,454 - httpx - INFO - HTTP Request: POST https://api.ppinfra.com/v3/openai/chat/completions "HTTP/1.1 200 OK"
+2025-02-18 20:24:28,502 - article_generator - INFO - 文章生成成功
+2025-02-18 20:24:28,504 - __main__ - INFO - 文章内容生成完成
+2025-02-18 20:24:28,547 - image_generator - INFO - 图片生成器初始化成功
+2025-02-18 20:24:53,408 - __main__ - INFO - 生成了 2 张配图
+2025-02-18 20:24:53,686 - document_writer - INFO - 文档已保存到: output\article_20250218_202453.docx
+2025-02-18 20:24:53,687 - __main__ - INFO - 文档已生成: output\article_20250218_202453.docx

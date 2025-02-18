@@ -4,10 +4,17 @@ from logging.handlers import RotatingFileHandler
 from utils.config import Config
 
 class Logger:
+    _instance = None
+    
+    def __new__(cls, name='seo_article_generator'):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+            cls._instance._setup_logger(name)
+        return cls._instance
+    
     def __init__(self, name='seo_article_generator'):
         self.config = Config()
         self.log_dir = self.config.get('log_dir', 'logs')
-        self._setup_logger(name)
     
     def _setup_logger(self, name):
         """设置日志记录器"""
