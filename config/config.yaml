@@ -1,0 +1,4 @@
+deepseek_api_key: 'sk_lBPmVmoH57YDiskY3e2teS-1-Zf-JFlysM7Lh2W6ZSc'
+flux_api_key: 'sk-etlrstrcapppqxvwebslkjzyqllgimbvfdtdaasboeuwaehz'
+log_dir: logs
+output_dir: output
